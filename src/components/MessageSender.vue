@@ -2,7 +2,7 @@
   <div class="message-sender">
     <Form
       ref="senderForm"
-      style="max-width: 500px; margin:auto; padding-right:10px;"
+      class="send-form"
       :model="formData"
       :rules="ruleMessage"
       label-position="right"
@@ -29,10 +29,24 @@
         />
       </FormItem>
       <FormItem>
-        <Button type="primary" @click="handleSubmit('senderForm')">发送</Button>
-        <Button v-if="success" @click="gotoDetail" style="margin-left: 8px">
-          查看
-        </Button>
+        <Button
+          type="primary"
+          shape="circle"
+          size="large"
+          icon="ios-send"
+          @click="handleSubmit('senderForm')"
+          >发送</Button
+        >
+        <Button
+          v-if="success"
+          type="success"
+          shape="circle"
+          size="large"
+          icon="ios-eye"
+          @click="gotoDetail"
+          style="margin-left: 8px"
+          >查看</Button
+        >
       </FormItem>
     </Form>
   </div>
@@ -105,7 +119,7 @@ export default {
           })
           .catch(function(err) {
             removeLoading();
-            msg.error("Network request failed.");
+            msg.error("发送消息失败");
             throw err;
           });
       });
@@ -120,5 +134,10 @@ export default {
 <style scoped>
 div.message-sender {
   text-align: center;
+}
+.send-form {
+  max-width: 600px;
+  margin: auto;
+  font-size: 1rem;
 }
 </style>

@@ -14,7 +14,7 @@
     </div>
     <!-- 扫描成功 -->
     <div class="scan-success" v-else>
-      <p>你的 Open ID 为</p>
+      <p>您的 Open ID 为</p>
       <div class="open-id">
         {{ result.open_id }}
       </div>
@@ -40,26 +40,15 @@ export default {
     Divider
   },
   data: function() {
-    // return {
-    //   is_scanning: true,
-    //   scan: {
-    //     loading_qrcode: true,
-    //     scene_id: null,
-    //     qr_url: "https://via.placeholder.com/400x400?text=Loading"
-    //   },
-    //   result: {
-    //     open_id: null
-    //   }
-    // };
     return {
-      is_scanning: false,
+      is_scanning: true,
       scan: {
         loading_qrcode: true,
         scene_id: null,
         qr_url: "https://via.placeholder.com/400x400?text=Loading"
       },
       result: {
-        open_id: "OPEN_ID"
+        open_id: null
       }
     };
   },
@@ -133,9 +122,9 @@ export default {
   position: relative;
 
   img {
-    margin: 50px;
-    width: 300px;
-    height: 300px;
+    max-width: 100%;
+    width: 400px;
+    padding: 50px 20px;
     overflow: hidden;
   }
   .spin-icon-load {
