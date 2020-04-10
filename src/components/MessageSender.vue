@@ -9,26 +9,23 @@
       :label-width="60"
     >
       <FormItem label="ID" prop="openID">
-        <Input
-          v-model="formData.openID"
-          placeholder="Input OpenID for receiver"
-        />
+        <Input v-model="formData.openID" placeholder="输入接收者的 Open ID" />
       </FormItem>
-      <FormItem label="Title" prop="title">
-        <Input v-model="formData.title" placeholder="Input title for message" />
+      <FormItem label="标题" prop="title">
+        <Input v-model="formData.title" placeholder="输入消息标题" />
       </FormItem>
-      <FormItem label="body" prop="body">
+      <FormItem label="正文" prop="body">
         <Input
           v-model="formData.body"
-          placeholder="Input body for message (Optional)."
+          placeholder="输入消息正文（可选）."
           type="textarea"
           :autosize="{ minRows: 2, maxRows: 10 }"
         />
       </FormItem>
-      <FormItem label="url" prop="url">
+      <FormItem label="链接" prop="url">
         <Input
           v-model="formData.url"
-          placeholder="Input url for message (Optional)."
+          placeholder="输入消息后的跳转链接（可选）"
         />
       </FormItem>
       <FormItem>
@@ -58,6 +55,10 @@ export default {
     openID: {
       type: String,
       default: ""
+    },
+    title: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -66,7 +67,7 @@ export default {
       token: "",
       formData: {
         openID: this.openID,
-        title: "",
+        title: this.title,
         body: "",
         url: ""
       },
@@ -85,7 +86,7 @@ export default {
           return;
         }
 
-        const data = new FormData();
+        const data = new URLSearchParams();
         data.append("receiver", app.formData.openID);
         data.append("title", app.formData.title);
         data.append("body", app.formData.body);
@@ -97,19 +98,10 @@ export default {
         axios
           .post(urls.messageUrl(), data)
           .then(function(response) {
-            const resp = response.data;
             removeLoading();
-            if (resp.success) {
-              msg.success("Request success");
-              app.success = true;
-              app.token = resp.data.token;
-            } else {
-              if (resp.msg.includes("40003")) {
-                msg.error("Wechat request failed. Check your open ID.");
-              } else {
-                msg.error("wechat request failed.");
-              }
-            }
+            msg.success("Request success");
+            app.success = true;
+            app.token = response.data.token;
           })
           .catch(function(err) {
             removeLoading();

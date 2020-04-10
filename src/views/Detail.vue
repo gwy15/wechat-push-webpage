@@ -1,10 +1,10 @@
 <template>
-  <div class="detail">
-    <h2>{{ title }}</h2>
-    <p id="created-time">{{ createdTime.fromNow() }}</p>
-    <div id="body" v-html="compiledMarkdown"></div>
+  <div class="detail-page">
+    <h2 class="title">{{ title }}</h2>
+    <p class="created-time">{{ createdTime.fromNow() }}</p>
+    <div class="message-body" v-html="compiledMarkdown"></div>
 
-    <div v-if="url" id="url">
+    <div v-if="url" class="url">
       <a :href="url">查看链接</a>
     </div>
   </div>
@@ -20,8 +20,8 @@ export default {
   name: "DetailPage",
   data: function() {
     return {
-      title: "Loading",
-      body: "loading data from server...",
+      title: "加载中",
+      body: "正在加载数据",
       createdTime: moment(),
       url: null
     };
@@ -35,8 +35,8 @@ export default {
     const app = this;
     const token = app.$route.params.token;
     if (token == null) {
-      app.title = "Token not found";
-      app.body = "Token not found. Don't visit this page directly.";
+      app.title = "";
+      app.body = "";
       return;
     }
     // api request
@@ -44,25 +44,19 @@ export default {
     axios
       .get(apiUrl)
       .then(function(response) {
-        const resp = response.data;
-        if (resp.success) {
-          const data = resp.data;
-          app.title = data.title;
-          app.body = data.body;
-          app.createdTime = moment.unix(data.created_time);
-          app.url = data.url;
-        } else {
-          app.title = "Request failed.";
-          app.body = resp.msg;
-        }
+        const data = response.data;
+        app.title = data.title;
+        app.body = data.body;
+        app.createdTime = moment.unix(data.created_time);
+        app.url = data.url;
       })
       .catch(function(err) {
         if (err.response.status == 404) {
-          app.title = "Token not found.";
-          app.body = err.response.data;
+          app.title = "消息不存在";
+          app.body = "未找到对应消息，请检查您的链接。";
         } else {
-          app.title = "Request failed.";
-          app.body = "Your network request has failed.";
+          app.title = "发生错误";
+          app.body = "发生了一些错误";
         }
       });
   },
@@ -74,22 +68,30 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-div.detail {
-  max-width: 600px;
-  margin: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-}
+<style lang="less">
+.detail-page {
+  max-width: 100vw;
+  overflow-y: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  .title {
+    font-size: 30px;
+    margin: 15px 0 20px;
+  }
+  .created-time {
+    text-align: right;
+    margin: 5px;
+  }
+  .url {
+    text-align: left;
+  }
+  .message-body {
+    margin-top: 10px;
+    text-align: left;
 
-p#created-time {
-  text-align: right;
-}
-#body {
-  text-align: left;
-}
-div#url {
-  text-align: left;
+    p {
+      line-height: 1.6;
+    }
+  }
 }
 </style>

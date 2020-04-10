@@ -1,32 +1,35 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/sender">Send</router-link>
-    </div>
-    <router-view />
+    <!-- <header>
+      Wechat-Push
+    </header> -->
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
-<style>
+<style lang="less" scoped>
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
+  font-size: 16px;
 
-#nav {
-  padding: 30px;
-}
+  min-height: 100vh;
+  min-width: 100vw;
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  header {
+    height: 60px;
+    font-size: 36px;
+    padding: 10px;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+  main {
+    height: calc(100vh - 60px);
+    padding: 20px;
+  }
 }
 </style>
