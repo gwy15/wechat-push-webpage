@@ -1,0 +1,124 @@
+@font-color   : #2a2b2c;
+@font-size    : 16px;
+@code-bg-color: #f2f2f2;
+@link-color   : rgb(39, 160, 221);
+
+.code-cls {
+  font-family     : Consolas, monospace;
+  background-color: @code-bg-color;
+  padding         : 2px 8px 2px 8px;
+  margin-left     : 4px;
+  margin-right    : 4px;
+  border-radius   : 5px;
+}
+
+.link-cls {
+  font-size           : @font-size;
+  color               : @link-color;
+  padding-left        : 2px;
+  padding-right       : 2px;
+  padding-bottom      : 1px;
+  border-bottom-color : @link-color;
+  border-bottom-style : solid;
+  border-bottom-width : 1px;
+  text-decoration-line: none;
+}
+
+a {
+  .link-cls();
+}
+
+p {
+  line-height: 1.8;
+
+  code {
+    .code-cls();
+    overflow-x: auto;
+  }
+
+  a {
+    .link-cls();
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+    margin : auto;
+  }
+}
+
+ol,
+ul {
+  margin: 20px 35px;
+
+  li {
+    font-size    : @font-size  !important;
+    line-height  : 1.2;
+    color        : @font-color;
+    margin-bottom: 0.6 * @font-size;
+
+    code {
+      // inline code
+      .code-cls();
+    }
+  }
+}
+
+// 表格
+table {
+  margin  : auto;
+  @padding: 4px 10px 4px 10px;
+
+  th,
+  td {
+    padding: @padding;
+  }
+
+  border-collapse: collapse;
+
+  thead {
+    border-bottom: 2px solid #808286;
+  }
+}
+
+// 代码块
+pre {
+  .code-cls();
+  padding    : 15px 15px 20px 20px;
+  font-size  : 0.9 * @font-size;
+  line-height: 1.2 * @font-size;
+  overflow-x : auto;
+
+  code {
+    .code-cls();
+    padding-left: 0px;
+    margin-left : 0px;
+  }
+}
+
+// block quote
+blockquote {
+  background-color: #fafafa;
+  padding         : 5px 5px 5px 30px;
+  border-left     : @font-color solid;
+}
+
+h1 {
+  font-size: 2 * @font-size;
+}
+
+h2 {
+  font-size    : 1.8 * @font-size;
+  font-weight  : 550;
+  color        : @font-color;
+  margin-top   : 10px;
+  margin-bottom: 6px;
+}
+
+h3 {
+  font-size: 1.5 * @font-size;
+}
+
+h4 {
+  font-size: 1.3 * @font-size;
+}

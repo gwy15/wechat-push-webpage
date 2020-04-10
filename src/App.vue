@@ -1,11 +1,18 @@
 <template>
   <div id="app">
-    <!-- <header>
-      Wechat-Push
-    </header> -->
     <main>
       <router-view />
     </main>
+    <footer>
+      Powered by
+      <a href="https://github.com/gwy15/wechat-push">
+        Wechat-Push
+      </a>
+      © 2020
+      <a href="https://gwy15.com">
+        gwy15
+      </a>
+    </footer>
   </div>
 </template>
 
@@ -19,17 +26,17 @@
   font-size: 16px;
 
   min-height: 100vh;
-  min-width: 100vw;
-
-  header {
-    height: 60px;
-    font-size: 36px;
-    padding: 10px;
-  }
+  width: 100vw;
 
   main {
-    height: calc(100vh - 60px);
+    min-height: calc(100vh - 30px);
     padding: 20px;
+  }
+
+  footer {
+    width: 100vw;
+    height: 30px;
+    font-size: 14px;
   }
 }
 </style>

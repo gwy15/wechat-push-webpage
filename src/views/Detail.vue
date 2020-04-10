@@ -13,8 +13,12 @@
 <script>
 import axios from "axios";
 import marked from "marked";
+import hljs from "highlight.js";
+import "highlight.js/styles/xcode.css";
 import moment from "moment";
 import { urls } from "@/utils/url";
+
+const renderer = new marked.Renderer();
 
 export default {
   name: "DetailPage",
@@ -46,6 +50,8 @@ export default {
       .then(function(response) {
         const data = response.data;
         app.title = data.title;
+        window.app = app;
+        window.marked = marked;
         app.body = data.body;
         app.createdTime = moment.unix(data.created_time);
         app.url = data.url;
@@ -62,6 +68,12 @@ export default {
   },
   computed: {
     compiledMarkdown: function() {
+      marked.setOptions({
+        renderer,
+        highlight: code => {
+          hljs.highlightAuto(code).value;
+        }
+      });
       return marked(this.body);
     }
   }
@@ -70,7 +82,8 @@ export default {
 
 <style lang="less">
 .detail-page {
-  max-width: 100vw;
+  max-width: 800px;
+  margin: auto;
   overflow-y: auto;
   word-wrap: break-word;
   word-break: break-all;
@@ -88,10 +101,7 @@ export default {
   .message-body {
     margin-top: 10px;
     text-align: left;
-
-    p {
-      line-height: 1.6;
-    }
+    @import (multiple) "../style/md";
   }
 }
 </style>
